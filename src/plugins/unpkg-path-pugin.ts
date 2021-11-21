@@ -1,6 +1,9 @@
 import * as esbuild from 'esbuild-wasm';
 import axios from 'axios'
- 
+import localForage from 'localforage'
+
+
+
 export const unpkgPathPlugin = () => {
   return {
     name: 'unpkg-path-plugin',
@@ -29,13 +32,18 @@ export const unpkgPathPlugin = () => {
           };
         } 
 
+        const cachedFile = await localForage.getItem<esbuild.OnLoadResult>(args.path)
+        if(cachedFile) return cachedFile
+
         const {data,request} = await axios.get(args.path)
-        console.log(request,'***************************');
-        return { 
+        
+        const result:esbuild.OnLoadResult = await  { 
             loader:'jsx',
             contents: data,
             resolveDir: new URL('./',request.responseURL).pathname
         }
+        await localForage.setItem(args.path,result)
+        return result
       });
     },
   };
