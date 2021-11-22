@@ -17,6 +17,8 @@ export const fetchPlugin = (inputCode:string)=>{
           build.onLoad({ filter:/.*/},async (args:any)=>{
             const cachedFile = await localForage.getItem<esbuild.OnLoadResult>(args.path)
             if(cachedFile) return cachedFile
+
+            //  if it does not return anything, it will fallback to other onLoads
   
           })
 
