@@ -1,8 +1,10 @@
+import 'bulmaswatch/superhero/bulmaswatch.min.css'
 import ReactDOM from "react-dom";
 import { useState, useEffect, useRef } from "react";
 import * as esbuild from "esbuild-wasm"
 import { unpkgPathPlugin } from "./plugins/unpkg-path-pugin";
 import {fetchPlugin} from "./plugins/fetchPlugin"
+import CodeEditor from "./components/code-editor"
 
 const App = ()=>{
 
@@ -69,7 +71,11 @@ const App = ()=>{
 
 
    return (
-       <div>
+       <div className="editor-wrapper">
+           <CodeEditor 
+             initialValue={"//start typing..."}
+             onChange={(value)=>setText(value)}   
+           />
            <textarea value={text} onChange={(e)=>setText(e.target.value)}></textarea>
            <div>
                <button onClick={onClick}>Submit</button>
