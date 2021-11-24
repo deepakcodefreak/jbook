@@ -9,8 +9,6 @@ const App = ()=>{
    return (
        <div>
           <CodeCell/>
-          <CodeCell/>
-
        </div>
    ) 
 }
